@@ -1,0 +1,2 @@
+# magic-test
+test magic
