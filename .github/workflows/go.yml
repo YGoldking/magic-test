@@ -33,10 +33,13 @@ jobs:
         include:
           - os: ubuntu-latest
             x7z_name: Linux
+            bin_name: magic
           - os: macos-latest
             x7z_name: Mac
+            bin_name: magic
           - os: windows-latest
             x7z_name: Win
+            bin_name: magic.exe
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -53,7 +56,7 @@ jobs:
       - name: Build
         run: |
           go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}-x64.7z magic
+          7z a -r magic-test_${{ matrix.x7z_name }}-x64.7z ${{ matrix.bin_name }}
 
       - name: Upload Release
         id: upload-release-asset
