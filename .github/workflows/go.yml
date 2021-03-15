@@ -12,6 +12,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
     steps:
     - uses: actions/checkout@v2
 
@@ -48,8 +50,8 @@ jobs:
         asset_content_type: application/x-7z-compressed
 
   buildMac:
-    needs: build
     runs-on: macos-latest
+    needs: build
     steps:
       - uses: actions/checkout@v2
 
@@ -67,7 +69,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          upload_url: ${{ needs.build.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.build.outputs.upload_url }}
           asset_path: ./magic-test_Macos-x64.7z
           asset_name: magic-test_Macos-x64.7z
           asset_content_type: application/x-7z-compressed
