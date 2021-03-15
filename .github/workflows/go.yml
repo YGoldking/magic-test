@@ -32,9 +32,9 @@ jobs:
         os: [ubuntu-latest,macos-latest]
         include:
           - os: ubuntu-latest
-            7z_name: Linux
+            x7z_name: Linux
           - os: macos-latest
-            7z_name: Mac
+            x7z_name: Mac
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -51,7 +51,7 @@ jobs:
       - name: Build
         run: |
           go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.7z_name }}-x64.7z magic
+          7z a -r magic-test_${{ matrix.x7z_name }}-x64.7z magic
 
       - name: Upload Release
         id: upload-release-asset
@@ -60,8 +60,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: ./magic-test_${{ matrix.7z_name }}-x64.7z
-          asset_name: magic-test_${{ matrix.7z_name }}-x64.7z
+          asset_path: ./magic-test_${{ matrix.x7z_name }}-x64.7z
+          asset_name: magic-test_${{ matrix.x7z_name }}-x64.7z
           asset_content_type: application/x-7z-compressed
 # 旧的
 #  build:
