@@ -24,28 +24,33 @@ jobs:
       run: |
         go build -v ./magic.go
         7z a -r magic-test_linux-x64.7z magic
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@main
+    - name: Upload to Release
+      uses: actions/upload-to-release@master
+      with:
+        args: magic-test_linux-x64.7z application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Upload Release
-      id: upload-release-asset
-      uses: actions/upload-release-asset@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./magic-test_linux-x64.7z
-        asset_name: magic-test_linux-x64.7z
-        asset_content_type: application/x-7z-compressed
+#    - name: Create Release
+#      id: create_release
+#      uses: actions/create-release@main
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#      with:
+#        tag_name: ${{ github.ref }}
+#        release_name: Release ${{ github.ref }}
+#        draft: false
+#        prerelease: false
+#
+#    - name: Upload Release
+#      id: upload-release-asset
+#      uses: actions/upload-release-asset@main
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#      with:
+#        upload_url: ${{ steps.create_release.outputs.upload_url }}
+#        asset_path: ./magic-test_linux-x64.7z
+#        asset_name: magic-test_linux-x64.7z
+#        asset_content_type: application/x-7z-compressed
 #    - name: Test
 #      run: go test -v ./...
 #  release:
