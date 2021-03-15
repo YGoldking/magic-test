@@ -27,7 +27,6 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
-            ${{ github.ref }}
             ${{ steps.Changelog.outputs.changelog }}
 
 
