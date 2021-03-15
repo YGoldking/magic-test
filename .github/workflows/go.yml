@@ -24,22 +24,17 @@ jobs:
       run: |
         go build -v ./magic.go
         7z a -r magic-test_linux-x64.7z magic
-    - name: Upload to Release
-      uses: actions/upload-to-release@master
-      with:
-        args: magic-test_linux-x64.7z application/octet-stream
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@master
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-#    - name: Create Release
-#      id: create_release
-#      uses: actions/create-release@main
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-#      with:
-#        tag_name: ${{ github.ref }}
-#        release_name: Release ${{ github.ref }}
-#        draft: false
-#        prerelease: false
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
 #
 #    - name: Upload Release
 #      id: upload-release-asset
