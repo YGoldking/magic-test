@@ -15,9 +15,11 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-#      - name: Changelog
-#        uses: scottbrenner/generate-changelog-action@master
-#        id: Changelog
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -26,8 +28,8 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-#          body: |
-#            ${{ steps.Changelog.outputs.changelog }}
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
 
 
   build_release:
