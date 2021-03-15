@@ -22,19 +22,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: ${{ github.ref }}
   build_release:
     name: Build release
     needs: create_release
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest,macos-latest]
+        os: [ubuntu-latest,macos-latest, windows-latest]
         include:
           - os: ubuntu-latest
             x7z_name: Linux
           - os: macos-latest
             x7z_name: Mac
+          - os: windows-latest
+            x7z_name: Win
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
