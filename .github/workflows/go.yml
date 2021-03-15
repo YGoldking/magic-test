@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: |
         go build -v ./magic.go
-        7z
+        7z a -r magic-test_linux-x64.7z magic
 
 #    - name: Test
 #      run: go test -v ./...
