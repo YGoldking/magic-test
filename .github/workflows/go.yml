@@ -23,6 +23,10 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
+#          body: |
+#            ${{ github.ref }}
+
+
   build_release:
     name: Build release
     needs: create_release
