@@ -32,7 +32,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: magic-test ${{ github.ref }}
         draft: false
         prerelease: false
 #
@@ -46,11 +46,28 @@ jobs:
         asset_path: ./magic-test_linux-x64.7z
         asset_name: magic-test_linux-x64.7z
         asset_content_type: application/x-7z-compressed
-#    - name: Test
-#      run: go test -v ./...
-#  release:
-#    name: release on github
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: se
+
+  buildMac:
+    needs: build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - name: Build
+        run: |
+           go build -v ./magic.go
+           7z a -r magic-test_Macos-x64.7z magic
+      - name: Upload Release
+        id: upload-release-asset
+        uses: actions/upload-release-asset@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          upload_url: ${{ needs.build.steps.create_release.outputs.upload_url }}
+          asset_path: ./magic-test_Macos-x64.7z
+          asset_name: magic-test_Macos-x64.7z
+          asset_content_type: application/x-7z-compressed
