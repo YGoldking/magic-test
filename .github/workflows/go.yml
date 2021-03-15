@@ -21,7 +21,15 @@ jobs:
         go-version: 1.16
 
     - name: Build
-      run: go build -v ./magic.go
+      run: |
+        go build -v ./magic.go
+        7z
 
 #    - name: Test
 #      run: go test -v ./...
+#  release:
+#    name: release on github
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: se
