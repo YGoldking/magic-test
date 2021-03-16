@@ -73,6 +73,7 @@ jobs:
           set GOARCH=amd64
           go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
+          ls
           del ${{ matrix.bin_name }}
           set CGO_ENABLED=0
           set GOOS=${{ matrix.go_os }}
@@ -88,9 +89,6 @@ jobs:
           rm -rf ${{ matrix.bin_name }}
           CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=386 go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }}
-#      - name: Compress and pack
-#        run: |
-#          Compress and pack
 
       - name: Upload Release amd64
         id: upload-release-asset
