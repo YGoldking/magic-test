@@ -15,13 +15,6 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Pull Request Body
-        id: pull_request_body
-        uses: technote-space/pr-commit-body-action@v1
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -30,9 +23,8 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          body: |
-            <!-- START pr-commits -->
-            <!-- END pr-commits -->
+#          body: |
+#            xxx
 
 
   build_release:
