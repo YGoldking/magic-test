@@ -82,7 +82,12 @@ jobs:
           7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }}
 
       - name: Build Unix
-        if: matrix.os != 'windows-latest'
+        if: matrix.os == 'macos-latest'
+        run: |
+          CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
+          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
+      - name: Build Linux
+        if: matrix.os == 'ubuntu-latest'
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
@@ -101,8 +106,8 @@ jobs:
           asset_name: magic-test_${{ matrix.x7z_name }}_amd64.7z
           asset_content_type: application/x-7z-compressed
 
-      - name: Upload Release 386
-#        id: upload-release-asset
+      - name: Upload Release 386 [linux|windows]
+        if: matrix.os != 'macos-latest'
         uses: actions/upload-release-asset@main
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
