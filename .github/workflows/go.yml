@@ -69,11 +69,14 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           go env
-          GOOS=${{ matrix.go_os }}
+          set CGO_ENABLED=0
+          set GOOS=${{ matrix.go_os }}
           set GOARCH=amd64
           go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
           del /f /s /q ${{ matrix.bin_name }}
+          set CGO_ENABLED=0
+          set GOOS=${{ matrix.go_os }}
           set GOARCH=386
           go env
           go build -v ./magic.go
@@ -82,10 +85,10 @@ jobs:
       - name: Build Unix
         if: matrix.os != 'windows-latest'
         run: |
-          GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
+          CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
           rm -rf ${{ matrix.bin_name }}
-          GOOS=${{ matrix.go_os }} GOARCH=386 go build -v ./magic.go
+          CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=386 go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }}
 #      - name: Compress and pack
 #        run: |
