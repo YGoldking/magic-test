@@ -74,7 +74,7 @@ jobs:
           set GOARCH=amd64
           go build -v ./magic.go
           7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
-          del /f /s /q ${{ matrix.bin_name }}
+          del ${{ matrix.bin_name }}
           set CGO_ENABLED=0
           set GOOS=${{ matrix.go_os }}
           set GOARCH=386
