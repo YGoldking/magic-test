@@ -31,7 +31,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
-            ${{ steps.pull_request_body.outputs.changelog }}
+            <!-- START pr-commits -->
+            <!-- END pr-commits -->
 
 
   build_release:
