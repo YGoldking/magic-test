@@ -72,28 +72,28 @@ jobs:
           set GOOS=${{ matrix.go_os }}
           set GOARCH=amd64
           go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
+          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }} dict
           ls
           del ${{ matrix.bin_name }}
           set CGO_ENABLED=0
           set GOOS=${{ matrix.go_os }}
           set GOARCH=386
           go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }}
+          7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }} dict
 
       - name: Build Unix
         if: matrix.os == 'macos-latest'
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
+          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }} dict
       - name: Build Linux
         if: matrix.os == 'ubuntu-latest'
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=amd64 go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }}
+          7z a -r magic-test_${{ matrix.x7z_name }}_amd64.7z ${{ matrix.bin_name }} dict
           rm -rf ${{ matrix.bin_name }}
           CGO_ENABLED=0 GOOS=${{ matrix.go_os }} GOARCH=386 go build -v ./magic.go
-          7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }}
+          7z a -r magic-test_${{ matrix.x7z_name }}_386.7z ${{ matrix.bin_name }} dict
 
       - name: Upload Release amd64
         id: upload-release-asset
